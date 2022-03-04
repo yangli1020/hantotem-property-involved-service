@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hantotem.property.mapper.mp.GaSacwYhglMapper">
+
+    <select id="getSignedUser" resultType="com.hantotem.property.domain.entity.GaSacwYhgl">
+
+    </select>
+    <select id="queryYhByCondition" parameterType="string" resultType="com.hantotem.property.domain.entity.GaSacwYhgl">
+        select * from ga_sacw_yhgl
+        where state=0
+        <if test="condition != null and '%%%' neq condition">
+            and (
+            sfzh LIKE CONCAT('%', #{condition},'%')
+            OR jh LIKE CONCAT('%', #{condition},'%')
+            )
+        </if>
+        and rlzp is not null
+        ORDER BY updated_time desc
+    </select>
+</mapper>

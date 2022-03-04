@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hantotem.property.mapper.mp.GaSacwCwgbMapper">
+
+    <select id="queryCabinetIpByUrl" resultType="com.hantotem.property.domain.vo.PhotoAndCabinetIpVO">
+        select ipadress from ga_sacw_cwgb where ssdwdm=#{ssdwdm}
+    </select>
+    <select id="selectSkbh" resultType="java.lang.Integer">
+        select skbh from ga_sacw_cwgb where jtwz = #{jtwz}
+    </select>
+    <select id="selectGz" resultType="com.hantotem.property.domain.entity.GaSacwCwgb">
+        select * from ga_sacw_cwgb where skbh = #{integer}
+    </select>
+
+
+</mapper>

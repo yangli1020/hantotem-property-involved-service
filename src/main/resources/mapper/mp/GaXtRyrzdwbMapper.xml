@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hantotem.property.mapper.mp.GaXtRyrzdwbMapper">
+
+    <select id="selectPoliceInfoByJh" resultType="com.hantotem.property.domain.entity.GaXtRyrzdwb">
+        SELECT dw.* FROM ga_xt_ryb ry LEFT JOIN ga_xt_ryrzdwb dw on ry.mjbh=dw.mjbh WHERE jh = #{jh} and ry.ifky='1' and dw.sfzrdw=1 and dw.ifky='1'
+    </select>
+
+    <select id="selectDwxx" parameterType="string" resultType="com.hantotem.property.domain.entity.GaXtGlbmb">
+        select  * from  ga_xt_glbmb where dm = #{unitId}
+    </select>
+</mapper>

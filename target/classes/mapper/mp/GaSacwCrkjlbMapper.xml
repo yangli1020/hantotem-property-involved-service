@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hantotem.property.mapper.mp.GaSacwCrkjlbMapper">
+
+    <update id="updateByAjbhCascade">
+        update ga_sacw_crkjlb
+        set ajmc     = #{ajmc},
+            ajzbdw   = #{ajzbdw},
+            ajzbdwdm = #{ajzbdwdm}
+        where ajbh = #{ajbh}
+    </update>
+    <select id="getNewestInRecord" resultType="com.hantotem.property.domain.entity.GaSacwCrkjlb">
+        select wpbh
+        from ga_sacw_crkjlb
+        where wprfid = #{wprfid}
+          and jsdwdm = #{ssdwdm}
+          and wpztdldm = #{wpztdldm}
+        order by czsj desc
+        limit 1
+    </select>
+    <select id="getStatisticByTime" resultType="com.hantotem.property.domain.dto.TodayStatisticDTO">
+        SELECT-- 时间内总入库数 根据次数统计
+              SUM ( CASE WHEN wpztxldm = '2'  THEN 1 ELSE 0 END ) AS stockin,
+              -- 时间内在库数 根据件数统计
+              SUM ( CASE WHEN lsatstate = '2' OR lsatstate = '3'  THEN num ELSE 0 END ) AS onstock,
+              -- 时间内出库数 根据件数统计
+              SUM ( CASE WHEN lsatstate = '4'  THEN num ELSE 0 END ) AS onstockout,
+              -- 时间内第一次入库数
+              SUM ( CASE WHEN recordnum = 1 AND wpztxldm = '2' THEN 1 ELSE 0 END ) AS firststockin,
+              -- 归库数
+              SUM ( CASE WHEN recordnum > 1 AND wpztxldm = '2' THEN 1 ELSE 0 END ) AS returnstockin,
+              -- 异常数
+              SUM ( CASE WHEN wpztxldm = '5' THEN 1 ELSE 0 END ) AS warnnum,
+              -- 出库数 根据次数统计
+              SUM ( CASE WHEN wpztxldm = '4' THEN 1 ELSE 0 END ) AS stockout
+        FROM
+            (
+                SELECT
+                    wpbh,
+                    czsj,
+                    wpztdl,
+                    wpztdldm,
+                    wpztxl,
+                    gdztdm AS wpztxldm,
+                    FIRST_VALUE(gdztdm)OVER(PARTITION by wpbh ORDER BY czsj desc) as lsatstate,
+                    COALESCE(LAG(0)OVER(PARTITION by wpbh ORDER BY czsj desc),1) as num
+                FROM
+                    ga_sacw_crkjlb
+                WHERE
+                    1 = 1
+                  AND state = 0
+                  AND jsdwdm = #{ssdwdm}
+                  AND czsj BETWEEN to_timestamp( #{startTime}, 'yyyy-mm-dd HH24:mi:ss' )
+                    AND to_timestamp( #{endTime}, 'yyyy-mm-dd HH24:mi:ss' )
+            ) tt1
+                LEFT JOIN ( SELECT COUNT ( 1 ) AS recordnum, wpbh FROM ga_sacw_crkjlb GROUP BY wpbh ) tt2 ON tt1.wpbh = tt2.wpbh
+    </select>
+</mapper>

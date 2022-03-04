@@ -1,0 +1,121 @@
+#########################################################################
+####                            开发环境                              ####
+#########################################################################
+server:
+  port: 19800
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: utf-8
+
+spring:
+  datasource:
+    druid:
+      stat-view-servlet:
+        enabled: true
+        allow:
+        loginUsername: root
+        loginPassword: root
+    dynamic:
+      druid:
+        initial-size: 5
+        max-active: 30
+        min-idle: 5
+        max-wait: 60000
+        time-between-eviction-runs-millis: 60000
+        min-evictable-idle-time-millis: 300000
+        validation-query: SELECT 1
+        test-while-idle: true
+        test-on-borrow: false
+        test-on-return: false
+        pool-prepared-statements: true
+        max-pool-prepared-statement-per-connection-size: 50
+        filters: stat
+        connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+        use-global-data-source-stat: true
+        web-stat-filter:
+          url-pattern: /*
+          exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+      p6spy: true
+      primary: sacwzx
+      datasource:
+        sacwzx:
+          username: hantu
+          password: hantu123
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://192.168.1.202:5432/sacwzx?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8&allowMultiQueries=true
+        slave:
+          username: hantu
+          password: hantu123
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://192.168.1.202:5432/sacwzx?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8&allowMultiQueries=true
+
+
+  redis:
+    # Redis数据库索引（默认为 0）
+    database: 10
+    # Redis服务器地址
+    host: 192.168.1.202
+    # Redis服务器连接端口
+    port: 6379
+    # Redis 密码
+    password:
+    lettuce:
+      pool:
+        # 连接池中的最小空闲连接
+        min-idle: 8
+        # 连接池中的最大空闲连接
+        max-idle: 500
+        # 连接池最大连接数（使用负值表示没有限制）
+        max-active: 2000
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: 10000
+    # 连接超时时间（毫秒）
+    timeout: 5000
+
+management:
+  health:
+    redis:
+      enabled: false
+
+hantotem:
+  uploadUrl: http://192.168.1.203:9999/group1/upload
+  videoUrl: http://192.168.1.202:8991
+
+minio:
+  # MinIO服务所在地址
+  endpoint: http://192.168.1.202:18500
+  # 访问的key
+  accessKey: minioadmin
+  # 访问的秘钥
+  secretKey: minioadmin
+
+
+#柜子ip地址
+cabinetIp: 192.168.1.45
+#柜子端口
+cabinetPort: 19804
+#开柜接口
+openCabinet: /involvedAndroid/lockOpen
+#人脸注册接口
+FaceInterface: /involvedAndroid/registeredFaceImage
+#人脸删除接口
+FaceDelete: /involvedAndroid/deleteFaceImageByIdCardNo
+#锁状态接口
+lockStateAll: /involvedAndroid/lockStateAll
+#是否推送三中心
+sfts: 0
+
+sjjh:
+  #所属单位
+  SSDWSUB: 532822
+  #推送地址
+  BAQTSURL: http://86.1.43.54:80/lmp/service/cityreceiver/receiver/receiveData
+  #uuid
+  BAQSJJHUUID: 53282261453766
+  #userid
+  BAQSJJHUSERId: 53282261453766
+  #密钥
+  BAQSJJHLICENSEKEY: 55087291-5415-401d-a288-a657fde96c59
+  #是否推送0不推送 1推送
+  SFTS: 1

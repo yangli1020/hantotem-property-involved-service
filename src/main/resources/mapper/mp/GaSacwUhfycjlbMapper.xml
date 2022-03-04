@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hantotem.property.mapper.mp.GaSacwUhfycjlbMapper">
+    <select id="selectOneJlxx" resultType="com.hantotem.property.domain.entity.GaSacwUhfycjlb">
+    select id,uhfip,wprfid,wpbh,spdz,yckssj,ycjzsj,created_time,czzt
+    from  ga_sacw_uhfycjlb where wprfid=#{wprfid} order by created_time desc limit 1
+    </select>
+</mapper>
